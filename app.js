@@ -25,11 +25,12 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 app.use((req, res, next) => {
-    console.log(Date().toString());
+    req.requestTime = Date().toString();
     next();
 });
 
 app.get('/', (req, res) => {
+    console.log(`REQUEST DATE: ${req.requestTime}.`);
     res.render('home');
 });
 
