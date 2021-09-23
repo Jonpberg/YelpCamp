@@ -17,7 +17,7 @@ const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", () => {
     console.log("Database connected");
-})
+});
 
 const app = express();
 
@@ -26,8 +26,13 @@ app.set('views', path.join(__dirname, 'views'));
 
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
+app.use((req, res, next) => {
+    req.requestTime = Date().toString();
+    next();
+});
 
 app.get('/', (req, res) => {
+    console.log(`REQUEST DATE: ${req.requestTime}.`);
     res.render('home');
 });
 
