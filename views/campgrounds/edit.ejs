@@ -10,6 +10,9 @@
                 <div class="valid-feedback">
                     Looks good!
                 </div>
+                <div class="invalid-feedback">
+                    Please include a campground title.
+                </div>
             </div>
             <div class="mb-3">
                 <label class="form-label" for="location">Location</label>
@@ -17,12 +20,18 @@
                 <div class="valid-feedback">
                     Looks good!
                 </div>
+                <div class="invalid-feedback">
+                    Please include a campground location.
+                </div>
             </div>
             <div class="mb-3">
                 <label class="form-label" for="image">Image Url</label>
                 <input class="form-control" type="text" id="image" name="campground[image]" value="<%= campground.image %>" required>
                 <div class="valid-feedback">
                     Looks good!
+                </div>
+                <div class="invalid-feedback">
+                    Please include a campground image.
                 </div>
             </div>
             <div class="mb-3">
@@ -34,6 +43,9 @@
                     <div class="valid-feedback">
                         Looks good!
                     </div>
+                    <div class="invalid-feedback">
+                        Please include a campground price.
+                    </div>
                 </div>
             </div>
 
@@ -43,6 +55,9 @@
                 ><%= campground.description %> </textarea>
                 <div class="valid-feedback">
                     Looks good!
+                </div>
+                <div class="invalid-feedback">
+                    Please include a campground description.
                 </div>
             </div>
             <div class="mb-3">
