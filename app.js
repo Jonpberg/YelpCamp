@@ -60,8 +60,10 @@ passport.deserializeUser(User.deserializeUser());
 
 app.use((req, res, next) => {
     req.requestTime = Date().toString();
+    req.appName = 'YelpCamp';
     res.locals.success = req.flash('success');
     res.locals.error = req.flash('error');
+    res.locals.currentUser = req.user;
     next();
 });
 
