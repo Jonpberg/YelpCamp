@@ -1,0 +1,42 @@
+<% layout('layouts/boilerplate') %>
+
+<div class="row">
+    <div class="col-12">
+        <h1 class=""><%= user.username %>'s' <%= appName %></h1>
+        <h5 class="text-muted border-bottom pb-3 mb-4"><%= user.email %></h5>
+    </div>
+    <div class="col-lg-6">
+        <h3 class="mb-4">Campgrounds</h3>
+        <div id="user_campground_container" class="d-grid grid-repeat-2 gap-3 mb-5">
+            <% for (let campground of userCampgrounds.reverse()) { %>
+                <div class="card">
+                    <img src="<%= campground.image %>" class="card-img-top fit-cover" alt="<%= campground.title %>">
+                    <div class="card-body">
+                        <h5 class="card-title mb-0 text-body"><%= campground.title %></h5>
+                        <p class="card-text text-muted mb-2"><%= campground.location %></p>
+                        <a href="/campgrounds/<%= campground._id %>/" class="btn btn-sm btn-primary text-light mb-2">View Campground</a>
+                        <% if (currentUser && campground.author.equals(currentUser._id)) { %>
+                            <a href="/campgrounds/<%= campground._id %>/edit" class="btn btn-sm btn-info text-light mb-2">Edit Campground</a>
+                            <form class="d-inline" action="/campgrounds/<%= campground._id %>?_method=DELETE" method="POST">
+                                <button class="btn btn-sm btn-danger mb-2">Delete Campground</button>
+                            </form>
+                        <% } %>
+                    </div>
+                </div>
+            <% } %>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <h3 class="mb-4">Reviews</h3>
+        <% for(let review of userReviews) { %>
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class='card-title'><%= review.campgroundTitle %></h5>
+                    <h6 class="card-subtitle text-muted mb-2">Rating: <%= review.reviewRating %></h6>
+                    <p class='card-text mb-2'><%= review.reviewBody %></p>
+                    <a href="/campgrounds/<%= review.campgroundId %>/">View Review</a>
+                </div>
+            </div>
+        <% } %>
+    </div>
+</div>

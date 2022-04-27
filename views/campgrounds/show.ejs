@@ -10,7 +10,7 @@
             </div>
             <ul class="list-group list-group-flush">
                 <li class="list-group-item text-muted"><%= campground.location %></li>
-                <li class="list-group-item text-muted"><%= campground.author.username %></li>
+                <li class="list-group-item text-muted">Operated by: <a href="/users/<%= campground.author._id %>"><%= campground.author.username %></a></li>
                 <li class="list-group-item">$<%= campground.price %> / night</li>
             </ul>
             <% if (currentUser && campground.author.equals(currentUser._id)) { %>
@@ -47,8 +47,19 @@
             <button class="btn btn-success">Submit</button>
         </form>
         <% } %>
+        <% if(!currentUser) { %>
+            <h2>Want to leave your own Review?</h2>
+            <h5 class="text-muted mb-4"><a href="/login/">Log in</a> or <a href="/register/">Register</a> today to create a profile and leave your mark on this trail.</h5>
+        <% } %>
+        <% if (!campground.reviews.length) { %>
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">No reviews yet =(</h5>
+                    <p class="card-text">Be the first to share your thoughts about <%= campground.title %> by leaving your own review above!</p>
+                </div>
+            </div>
+        <% } %>
         <% for(let review of campground.reviews.reverse()) { %>
-
             <div class="card mb-3">
                 <div class="card-body">
                     <h5 class='card-title'>Rating: <%= review.rating %></h5>

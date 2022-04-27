@@ -1,12 +1,40 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/user');
+const Campground = require('../models/campground');
 const catchAsync = require('../utils/catchAsync');
 const passport = require('passport');
+
 
 router.get('/register', (req, res) => {
     res.render('users/register')
 });
+
+router.get('/users/:userId', async (req, res) => {
+    const { userId } = req.params;
+    const userCampgrounds = [];
+    const userReviews = [];
+    const user = await User.findById(userId);
+    const campgrounds = await Campground.find({}).populate('author').populate('reviews');
+    campgrounds.forEach(function(campground) {
+        if(campground.author._id.equals(userId)) {
+            userCampgrounds.push(campground);
+        }
+        campground.reviews.forEach(function(review) {
+            if(review.author.equals(userId)) {
+                let appendedReview = {
+                    campgroundTitle: campground.title,
+                    campgroundId: campground._id,
+                    reviewBody: review.body,
+                    reviewRating: review.rating,
+                    reviewAuthor: user.username
+                }
+                userReviews.push(appendedReview);
+            }
+        })
+    })
+    res.render('users/show', { userCampgrounds, userReviews, user });
+})
 
 router.post('/register', catchAsync(async (req, res) => {
     try {
