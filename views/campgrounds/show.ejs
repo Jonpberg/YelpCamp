@@ -28,7 +28,10 @@
         </div>
     </div>
     <div class="col-6">
-        <% if(currentUser) { %>
+        <% if (currentUser && currentUser._id.equals(campground.author._id)) { %>
+            <h2 class="mb-4">Your Campground's Reviews</h2>
+        <% } %>
+        <% if(currentUser && !currentUser._id.equals(campground.author._id)) { %>
         <h2>Leave a Review</h2>
         <form action="/campgrounds/<%= campground._id %>/reviews" method="POST" id="star-form" class="mb-5 validated-form" novalidate>
             <div class="mb-3">
